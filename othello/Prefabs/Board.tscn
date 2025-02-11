@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkkapsdexumgn"]
+
+[ext_resource type="Script" path="res://Scripts/boardLayout.gd" id="1_llu1i"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wwnh8"]
+
+[node name="Board" type="Node3D"]
+script = ExtResource("1_llu1i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+mesh = SubResource("PlaneMesh_wwnh8")
