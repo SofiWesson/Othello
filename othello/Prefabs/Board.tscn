@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkkapsdexumgn"]
+[gd_scene load_steps=5 format=3 uid="uid://dkkapsdexumgn"]
 
 [ext_resource type="Script" path="res://Scripts/boardLayout.gd" id="1_llu1i"]
+[ext_resource type="PackedScene" uid="uid://nc4v2j614i63" path="res://Prefabs/ChipReserve.tscn" id="2_gey5q"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_wwnh8"]
 
@@ -14,3 +15,9 @@ script = ExtResource("1_llu1i")
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 mesh = SubResource("PlaneMesh_wwnh8")
 surface_material_override/0 = SubResource("StandardMaterial3D_dgup2")
+
+[node name="P1ChipReserve" parent="." instance=ExtResource("2_gey5q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4.5)
+
+[node name="P2ChipReserve" parent="." instance=ExtResource("2_gey5q")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, -4.5)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqu45q2gjepqc"]
+
+[ext_resource type="Script" path="res://Scripts/SelectionCollider.gd" id="1_ihlcc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft212"]
+transparency = 1
+albedo_color = Color(0.364706, 0.980392, 1, 0.196078)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j7t30"]
+material = SubResource("StandardMaterial3D_ft212")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y4dqj"]
+
+[node name="SelectionCollider" type="Node3D"]
+script = ExtResource("1_ihlcc")
+
+[node name="SelectedVisualiser" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_j7t30")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_y4dqj")
+
+[connection signal="mouse_entered" from="StaticBody3D" to="." method="_on_static_body_3d_mouse_entered"]
+[connection signal="mouse_exited" from="StaticBody3D" to="." method="_on_static_body_3d_mouse_exited"]
