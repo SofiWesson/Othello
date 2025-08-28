@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bop7jtbn1n1hd"]
+
+[ext_resource type="PackedScene" uid="uid://j22pvfcvle6e" path="res://Prefabs/Board.tscn" id="1_mpqws"]
+
+[node name="Workshop" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Board" parent="." instance=ExtResource("1_mpqws")]
