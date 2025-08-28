@@ -7,3 +7,5 @@
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Board" parent="." instance=ExtResource("1_mpqws")]
+
+[editable path="Board"]

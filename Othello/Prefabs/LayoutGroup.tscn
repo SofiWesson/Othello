@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2c7s5e1jgp7i"]
+
+[ext_resource type="Script" uid="uid://dacaftfmeb6nh" path="res://Scripts/LayoutGroup.cs" id="1_c0lun"]
+
+[node name="LayoutGroup" type="CanvasGroup"]
+script = ExtResource("1_c0lun")

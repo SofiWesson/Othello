@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://j22pvfcvle6e"]
+[gd_scene load_steps=4 format=3 uid="uid://j22pvfcvle6e"]
 
 [ext_resource type="Script" uid="uid://bfxdrjhee7al6" path="res://Scripts/Board.cs" id="1_kwgjw"]
 [ext_resource type="Texture2D" uid="uid://ci28krihwcog1" path="res://Sprites/Board.png" id="2_ugbi8"]
+[ext_resource type="PackedScene" uid="uid://b2c7s5e1jgp7i" path="res://Prefabs/LayoutGroup.tscn" id="3_7xsu1"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_kwgjw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ugbi8")
+
+[node name="PlayerOneReserve" parent="." instance=ExtResource("3_7xsu1")]
+
+[node name="PlayerTwoReserve" parent="." instance=ExtResource("3_7xsu1")]

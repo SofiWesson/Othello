@@ -13,6 +13,7 @@ config_version=5
 config/name="Othello"
 run/main_scene="uid://bop7jtbn1n1hd"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [dotnet]

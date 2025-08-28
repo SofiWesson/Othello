@@ -122,30 +122,46 @@ public class Space
 public partial class Board : Node
 {
 	private Space[,] board = new Space[8, 8];
+	private List<Piece> playerOneReserve = new List<Piece>();
+	private List<Piece> playerTwoReserve = new List<Piece>();
 	private PackedScene packedPiece = ResourceLoader.Load<PackedScene>("res://Prefabs/Piece.tscn");
-	private int boardSize = 8;
 	private float sizeModifier = 10;
 	private bool boardUpdated = false;
-
+	// movement = 30 half, 60 full
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		InitialiseBoardSpaces();
+		InstantiatePieces(playerOneReserve);
+		InstantiatePieces(playerTwoReserve);
+		InstantiateBoardSpaces();
 		SetBoardStart();
 	}
-	private void InitialiseBoardSpaces()
+	private void InstantiatePieces(List<Piece> playerPieces)
 	{
+		int reserveSize = 32;
+		for (int i = 0; i < reserveSize; i++)
+		{
+			Node2D piece = (Node2D)packedPiece.Instantiate();
+			AddChild(piece);
+			Piece newPiece = new Piece(piece, Piece.State.RESERVED);
+			playerPieces.Add(newPiece);
+		}
+	}
+	private void InstantiateBoardSpaces()
+	{
+		int boardSize = 8;
 		for (int i = 0; i < boardSize; i++)
 		{
 			for (int j = 0; j < boardSize; j++)
 			{
-				Node2D piece = (Node2D)packedPiece.Instantiate();
-				AddChild(piece);
-				Piece newPiece = new Piece(piece, Piece.State.RESERVED);
-				Space newSpace = new Space(newPiece, Space.State.EMPTY, this);
+				Space newSpace = new Space(null, Space.State.EMPTY, this);
 				board[i, j] = newSpace;
 			}
 		}
+	}
+	private void InitialisePieces()
+	{
+
 	}
 	public void SetBoardStart()
 	{
