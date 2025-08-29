@@ -102,10 +102,14 @@ public class Space
 	{
 		return piece;
 	}
+	public void SetPiece(Piece piece)
+	{
+		this.piece = piece;
+	}
 	public Vector2 GetPosition(int row, int column)
 	{
 		Vector2 position = new Vector2((column - positionOffset) * board.GetSizeModifier(), (row - positionOffset) * board.GetSizeModifier());
-		Debug.Print(position.X + " " + position.Y);
+		//Debug.Print(position.X + " " + position.Y);
 		return position;
 	}
 	public State GetState()
@@ -121,28 +125,31 @@ public class Space
 
 public partial class Board : Node
 {
+	[Export] LayoutGroup whiteReserveGroup;
+	[Export] LayoutGroup blackReserveGroup;
 	private Space[,] board = new Space[8, 8];
-	private List<Piece> playerOneReserve = new List<Piece>();
-	private List<Piece> playerTwoReserve = new List<Piece>();
+	private List<Piece> whiteReserve = new List<Piece>();
+	private List<Piece> blackReserve = new List<Piece>();
 	private PackedScene packedPiece = ResourceLoader.Load<PackedScene>("res://Prefabs/Piece.tscn");
 	private float sizeModifier = 10;
+	private bool whitesTurn = true;
 	private bool boardUpdated = false;
 	// movement = 30 half, 60 full
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		InstantiatePieces(playerOneReserve);
-		InstantiatePieces(playerTwoReserve);
+		InstantiatePieces(whiteReserve, whiteReserveGroup);
+		InstantiatePieces(blackReserve, blackReserveGroup);
 		InstantiateBoardSpaces();
 		SetBoardStart();
 	}
-	private void InstantiatePieces(List<Piece> playerPieces)
+	private void InstantiatePieces(List<Piece> playerPieces, LayoutGroup reserve)
 	{
 		int reserveSize = 32;
 		for (int i = 0; i < reserveSize; i++)
 		{
 			Node2D piece = (Node2D)packedPiece.Instantiate();
-			AddChild(piece);
+			reserve.AddChild(piece);
 			Piece newPiece = new Piece(piece, Piece.State.RESERVED);
 			playerPieces.Add(newPiece);
 		}
@@ -166,11 +173,11 @@ public partial class Board : Node
 	public void SetBoardStart()
 	{
 		// set white centre start pieces
-		PlacePiece(4, 3, Space.State.OCCUPIED, Piece.State.WHITE);
-		PlacePiece(3, 4, Space.State.OCCUPIED, Piece.State.WHITE);
+		PlacePiece(4, 3, Space.State.OCCUPIED, Piece.State.WHITE, whiteReserve);
+		PlacePiece(3, 4, Space.State.OCCUPIED, Piece.State.WHITE, whiteReserve);
 		// set black centre start pieces
-		PlacePiece(4, 4, Space.State.OCCUPIED, Piece.State.BLACK);
-		PlacePiece(3, 3, Space.State.OCCUPIED, Piece.State.BLACK);
+		PlacePiece(4, 4, Space.State.OCCUPIED, Piece.State.BLACK, blackReserve);
+		PlacePiece(3, 3, Space.State.OCCUPIED, Piece.State.BLACK, blackReserve);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -180,8 +187,12 @@ public partial class Board : Node
 		boardUpdated = false;
 	}
 
-	private void PlacePiece(int row, int column, Space.State occupancy, Piece.State colour)
+	private void PlacePiece(int row, int column, Space.State occupancy, Piece.State colour, List<Piece> reserve)
 	{
+		board[row, column].SetPiece(reserve[0]);
+		reserve[0].GetPiece().GetParent().RemoveChild(reserve[0].GetPiece());
+		AddChild(reserve[0].GetPiece());
+		reserve.RemoveAt(0);
 		board[row, column].SetState(occupancy);
 		board[row, column].GetPiece().SetState(colour);
 		board[row, column].GetPiece().GetPiece().Position = board[row, column].GetPosition(row, column);

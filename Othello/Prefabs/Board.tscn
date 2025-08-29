@@ -4,12 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://ci28krihwcog1" path="res://Sprites/Board.png" id="2_ugbi8"]
 [ext_resource type="PackedScene" uid="uid://b2c7s5e1jgp7i" path="res://Prefabs/LayoutGroup.tscn" id="3_7xsu1"]
 
-[node name="Board" type="Node2D"]
+[node name="Board" type="Node2D" node_paths=PackedStringArray("whiteReserveGroup", "blackReserveGroup")]
 script = ExtResource("1_kwgjw")
+whiteReserveGroup = NodePath("PlayerOneReserve")
+blackReserveGroup = NodePath("PlayerTwoReserve")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ugbi8")
 
 [node name="PlayerOneReserve" parent="." instance=ExtResource("3_7xsu1")]
+position = Vector2(-160, -302)
 
 [node name="PlayerTwoReserve" parent="." instance=ExtResource("3_7xsu1")]
+position = Vector2(-160, 253)
